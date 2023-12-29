@@ -1,126 +1,83 @@
-﻿//Usuário:
-
-//Propriedades: Nome, ID do Usuário, Livros Emprestados.
-//Métodos: Um método para verificar os livros atualmente emprestados, um método para emprestar um livro, um método para devolver um livro.
-
+﻿namespace Livraria.Model;
 class Usuario
 {
-    public Usuario(string nome, int idUsuario, Biblioteca biblioteca)
+    public Usuario(string nome,  string senha)
     {
-        try
-        {
-            Nome = nome;
-            IdUsuario = idUsuario;
-            Biblioteca1 = biblioteca;
-        }
-        catch
-        {
-            Console.WriteLine("Favor Revise os valores adicionados");
-        }
-
+        Nome = nome;
+        Senha = senha;
 
     }
 
-    Biblioteca Biblioteca1 { get; }
     public string Nome { get; }
-    public int IdUsuario { get;}
- 
-    List<Livro> listaLivros = new List<Livro>();
+    public string Senha { get; }
 
+    public List<Livro> ListaLivrosEmprestados { get; set;}
 
-    public void emprestaLivro(Livro livro,Usuario user)
+    public bool userCadastrado = false;
+
+    //Função para emprestar um livro
+    public void EmprestaLivro(Livro livro)
     {
-
-        if (!Biblioteca1.ListaUsuarios.Contains(user))
+        //Se o usuário não estiver cadastrado em alguma biblioteca ele não consegue emprestar livro (use ! no lugar de == false)
+        if (!userCadastrado)
         {
-            Console.WriteLine("Usuário não pode emprestar livro por que não está cadastrado na biblioteca");
+            Console.WriteLine($"Você não pode realizar emprestimo de livro enquanto não se cadastrar em alguma biblioteca");
         }
-        else if (listaLivros.Count >= 3)
+        //Se o livro não estiver cadastrado na biblioteca não consegue emprestar
+        else if (!livro.livroCadastrado)
         {
-            
-            Console.WriteLine("O máximo de livros que pode emprestar é 3 livros, emprestimo negado\n");
-            
+            Console.WriteLine("Você não pode emprestar esse livro por que ele não está cadastrado em uma biblioteca");
         }
-        else if(listaLivros.Contains(livro))
+        //Se o livro já estiver na lista de emprestado não tem como emprestar novamente
+        else if (ListaLivrosEmprestados.Contains(livro))
         {
-            Console.WriteLine("Está livro já foi emprestado por você\n");
+            Console.WriteLine("Esse livro já está na sua lista de livro emprestados");
         }
-        else if(livro.emprestado == true)
+        //Se o livro já está emprestado não consegue emprestar
+        else if (livro.emprestado)
         {
-            Console.WriteLine("Esse livro já foi emprestado por outra pessoa\n");
+            Console.WriteLine("Esse Livro já está emprestado");
         }
+        //Se a listaLivroEmprestados for mais que 3 não consegue emprestar mais
+        else if (ListaLivrosEmprestados.Count >= 3) 
+        {
+            Console.WriteLine("Você atingiu o limite de livro emprestados (3). Para conseguir emprestar outro livro devolva algum dos livros emprestados");
+        }
+        //Se passar das condições acima, permite o emprestimo do livro
         else
         {
-            try
-            {
-                listaLivros.Add(livro);
-                livro.emprestado = true;
-                Console.WriteLine(listaLivros.Count);
-
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Não foi possivel emprestar o livro da lista de livros");
-                throw;
-            }
+            ListaLivrosEmprestados.Add(livro);
         }
-
-        
-       
     }
-
 
     public void DevolveLivro(Livro livro)
     {
-
-        if (!listaLivros.Contains((livro)))
+        //Se o usuário não estiver cadastrado em alguma biblioteca ele não consegue emprestar livro (use ! no lugar de == false)
+        if (!userCadastrado)
         {
-            Console.WriteLine("Livro não encontrado, ou ele não existe ou já foi devolvido");
+            Console.WriteLine($"Você não pode realizar devolução de livro enquanto não se cadastrar em alguma biblioteca");
         }
+        //Se o livro não estiver cadastrado na biblioteca não consegue emprestar
+        
+        //Se passar das condições acima, permite o emprestimo do livro
         else
         {
-            try
-            {
-                listaLivros.Remove(livro);
-                livro.emprestado = false;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Livro já foi devolvido");
-                throw;
-            }
+            livro.emprestado = false;
+            ListaLivrosEmprestados.Remove(livro);
         }
-      
-
-        
-
-
-
     }
 
-    public void MostraLivrosEmprestados()
+    //Exibindo os livros emprestados
+    void ExibeLivrosEmprestado()
     {
-
-
-        try
+        Console.WriteLine("Segue os livros emprestados");
+        foreach(var livro in ListaLivrosEmprestados)
         {
-            Console.WriteLine("Segue os livros que estão emprestados: \n");
-            foreach(var livro in listaLivros )
-            {
-                Console.WriteLine($"Livro: {livro.Titulo}\n");
-                
-                
-               
-            }
-        }
-        catch (Exception)
-        {
-
+            Console.WriteLine($"Livro : {livro.Titulo}\n");
         }
     }
 
-    //Criar uma lista para livros emprestados e uma para livros devolvidos 
+
 
 
 }
-

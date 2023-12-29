@@ -1,22 +1,14 @@
-﻿//Livro:
-
-//Propriedades: Título, Autor, Ano de Publicação, Número de Páginas, ISBN.
-//Métodos: Um método para exibir as informações do livro.
-
-
-// Quando tem uma variável da seguinte forma _variavel (Isso significa que ela não deve ser acessado de outra classe-)
-//value (no set) é uma palavra chave que diz respeito ao valor atribuito a propriedade
+﻿namespace Livraria.Model;
 class Livro
 {
-    public Livro(string titulo, string autor, int anoPubli, int numeroPag, string isbn)
+    public Livro(string titulo, string autor, int codigo)
     {
         try
         {
             Titulo = titulo;
             Autor = autor;
-            AnoPubli = anoPubli;
-            NumeroPag = numeroPag;
-            Isbn = isbn;
+            Codigo = codigo;
+       
         }
         catch
         {
@@ -28,10 +20,12 @@ class Livro
 
     public string Titulo { get;  }
     public string Autor { get;  }
-    public int AnoPubli { get;  }
-    public int NumeroPag { get; }
-    public string Isbn { get; }
-    public bool emprestado { get; set; }
+    public int Codigo { get;  }
+
+    public bool emprestado = false;
+
+    public bool livroCadastrado = false;
+
 
     public void ExibeInfoLivro()
     {
@@ -40,9 +34,7 @@ class Livro
             Console.WriteLine("----------------------\n");
             Console.WriteLine($"Título: {Titulo}\n");
             Console.WriteLine($"Autor: {Autor}\n");
-            Console.WriteLine($"Ano de Publicação: {AnoPubli}\n");
-            Console.WriteLine($"Número de Páginas: {NumeroPag}\n");
-            Console.WriteLine($"ISBN: {Isbn}\n");
+            Console.WriteLine($"Ano de Publicação: {Codigo}\n");
             Console.WriteLine("----------------------\n");
         }
         catch (Exception)
