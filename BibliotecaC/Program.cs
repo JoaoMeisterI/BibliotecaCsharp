@@ -8,6 +8,7 @@ Livro livro4 = new Livro("teste", "George Orwell", 1949, 328, "978-0451524935");
 Biblioteca EraDoConhecimento = new Biblioteca("Biblioteca Era do Conhecimento");
 
 
+
 EraDoConhecimento.AdicionaLivroBiblioteca(livro1);
 EraDoConhecimento.AdicionaLivroBiblioteca(livro2);
 EraDoConhecimento.AdicionaLivroBiblioteca(livro3);
@@ -23,7 +24,6 @@ EraDoConhecimento.AdicionaUsuario(user1);
 
 
 user1.emprestaLivro(livro1,user2);
-
 
 
 
