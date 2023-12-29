@@ -15,12 +15,14 @@ class Biblioteca
     public void CadastraUsuario(Usuario usuario)
     {
         UsuariosCadastrados.Add(usuario);
+        Console.WriteLine("Usuário cadastrado com sucesso");
     }
 
     //Função para adicionar Livro
     public void CadastraLivro(Livro livro)
     {
         LivrosCadastrados.Add(livro);
+        Console.WriteLine("Livro cadastrado com sucesso");
     }
 
 }
