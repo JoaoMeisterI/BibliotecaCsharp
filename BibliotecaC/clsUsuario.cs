@@ -78,6 +78,25 @@ class Usuario
     }
 
 
+    //Isso faz com que o objeto seja identificado pelo código
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
 
+        Usuario other = (Usuario)obj;
+        return Nome == other.Nome && Senha == other.Senha;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + Nome.GetHashCode();
+            hash = hash * 23 + Senha.GetHashCode();
+            return hash;
+        }
+    }
 
 }
